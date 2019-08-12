@@ -18,15 +18,17 @@ class CreateSchedulesUsers extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('work_schedule_id');
             $table->timestamps();
-            $table->softDeletes();
+        
 
             $table->foreign('user_id')
             -> references('id')
-            ->on('users');
+            ->on('users')
+            ->onDelete('cascade');
             
             $table->foreign('work_schedule_id')
             ->references('id')
-            ->on('work_schedule');
+            ->on('work_schedule')
+            ->onDelete('cascade');
         });
     }
 

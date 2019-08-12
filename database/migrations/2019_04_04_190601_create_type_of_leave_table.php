@@ -16,11 +16,11 @@ class CreateTypeOfLeaveTable extends Migration
         Schema::create('type_of_leave', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('avaibles_days')->unsigned()->nullable();
+            $table->integer('available_days')->unsigned()->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+           
         });
     }
 

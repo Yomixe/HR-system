@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 class HomeController extends Controller
 {
     /**
@@ -72,5 +73,6 @@ class HomeController extends Controller
         return redirect()->back()->with("success","Password changed successfully !");
 
     }
+   
 
 }

@@ -20,11 +20,10 @@ class CreateContactDataTable extends Migration
             $table->string('flat_number')->nullable();
             $table->string('postal_code');
             $table->string('city');
-            $table->enum('country',config('enum.country'));
+            $table->enum('country',config('enum.country'))->default('Polska');
             $table->string('phone_number');
             $table->string('phone_number2');
 
-            $table->softDeletes();
             
             
 

@@ -11,6 +11,7 @@ class DepartmentsTableSeeder extends Seeder
      */
     public function run()
     {
+    
     Departments::create([
     'name'=>"Informatyczny",
     'description'=>"IT"

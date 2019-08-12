@@ -52,7 +52,7 @@ $factory->define(Contact::class, function (Faker $faker) use ($factory){
     
          'postal_code'=>$faker->postcode,
          'city'=>"Nowy Sącz",
-         'country' => "Polska", // password
+         'country' => "Polska", 
          'phone_number' => $faker->phoneNumber,
          'phone_number2' => $faker->phoneNumber,
         

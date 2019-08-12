@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DataTablesServiceProvider::class,
+        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     ],
 
     /*
@@ -228,6 +230,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Datatables' => Yajra\DataTables\Facades\Datatables::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+      
+        
     ],
 
 ];

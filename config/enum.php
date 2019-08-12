@@ -659,14 +659,10 @@ return [
        
     ],
 
-    'type_of_day'=> [
-        'Święto',
-        'Wolne',
-        'Praca'
+    
 
 
 
-
-    ],
+   
 
 ];

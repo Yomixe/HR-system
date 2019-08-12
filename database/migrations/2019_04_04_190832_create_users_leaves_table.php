@@ -19,20 +19,21 @@ class CreateUsersLeavesTable extends Migration
             $table->unsignedBigInteger('type_of_leave_id');
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('confirm')->nullable();
+            $table->boolean('confirm');
             $table->text('comment')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+          
 
 
             $table->foreign('user_id')
             -> references('id')
-            ->on('users');  
-
+            ->on('users')
+            ->onDelete('cascade');
             
             $table->foreign('type_of_leave_id')
             -> references('id')
-            ->on('type_of_leave') ;
+            ->on('type_of_leave') 
+            ->onDelete('cascade');
            
 
             

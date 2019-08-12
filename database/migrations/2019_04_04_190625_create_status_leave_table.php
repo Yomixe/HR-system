@@ -17,17 +17,16 @@ class CreateStatusLeaveTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('type_of_leave_id');
-            $table->integer('total_availble');
+           
             $table->integer('total_used');
             $table->timestamps();
-            $table->softDeletes();
+           
 
 
             $table->foreign('user_id')
             -> references('id')
             ->on('users')
-            ->onDelete('cascade');  
-            
+            ->onDelete('cascade');
             $table->foreign('type_of_leave_id')
             -> references('id')
             ->on('type_of_leave')

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Employee extends Model
 {
-    use SoftDeletes;
+   
 
     protected $table='employment_data';
     protected $fillable = [

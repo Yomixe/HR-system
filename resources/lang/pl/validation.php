@@ -143,6 +143,10 @@ return [
         'username' =>'nazwa użytkownika',
         'password' =>'hasło',
         'date_of_birth'=>'data urodzin',
+        'start_date'=>'data początkowa',
+        'end_date'=>'data końcowa',
+        'start'=>'godzina rozpoczęcia',
+        'end'=>'godzina zakończenia'
         
     ],
 ];

@@ -24,7 +24,7 @@ class CreateEmploymentDataTable extends Migration
             $table->string('position')->nullable;
             $table->string('bank_account');
             $table->timestamps();
-            $table->softDeletes();
+            
             
             
            

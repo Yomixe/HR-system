@@ -19,7 +19,8 @@ class EmployeesController extends Controller
         $employee=Employee::all();
         $contacts=Contact::all();
         $users=User::all();
-  return view ('employees.index', compact('employee','contacts','users'));
+        $current= \Auth::user();
+  return view ('employees.index', compact('employee','contacts','users','current'));
     }
 
    
@@ -43,6 +44,8 @@ class EmployeesController extends Controller
         $user->employees->delete();
         $user->contacts->delete();
 
-        return redirect(route('employees.index'))->with('success', 'Pomyślnie usunięto dane');
+        return redirect(route('pracownicy.index'))->with('success', 'Pomyślnie usunięto dane');
     }
+
+    
 }

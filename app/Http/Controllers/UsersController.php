@@ -9,14 +9,11 @@ use App\Roles;
 use App\Departments;
 use App\Contact;
 use App\Employee;
-
+use DataTables;
 use Illuminate\Support\Facades\DB;
 class UsersController extends Controller
 {
-public function __construct()
-    {
-        $this->middleware('roles');
-    }
+
 
     /**
      * Display a listing of the resource.
@@ -26,9 +23,43 @@ public function __construct()
     public function index()
     {
       
-       $users=User::all();
+        if (request()->ajax()) {
+   
+            $data=  User::latest()->get();
+          
+                    return Datatables::of($data)
+                    ->addIndexColumn()
+                  
+                    ->addColumn('action', function($row){
+                       
+                        $btn = '<a href="'. 'users/'.$row->id.'/edit'.'" method="get" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning edit-leave">Edytuj</a>';
+                        $btn = $btn.'<a href="javascript:void(0);"  id="delete-user"  data-toggle="tooltip" data-original-title="Delete" data-id="'.$row->id.'" class="delete btn btn-danger">Usuń    </a>';
+          
+                        return $btn;
+                    })
+                    ->editColumn('department_id',function($user) {
+                        return  $user->departments['name'];
+                    })
+                  
+                    ->editColumn('status',function($user) {
+                        return  $user->status==1 ? "Aktywny" : "Niekatywny";
+                    })
+                    ->addColumn('roles',function($user) {
+                        return $user->roles->map(function($roles) {
+                            return $roles->name;
+                        })->implode(' ');
+                    })
+                    ->rawColumns(['action'])
+                   
+                    ->make(true);
+              
+               }
+            
+         
+         
+                return view('users.index');
+            
        
-        return view('users.index', compact('users'));
     }
 
 
@@ -101,15 +132,10 @@ public function __construct()
      */
     public function destroy($id)
     {
-        $currentid = \Auth::user()->id;
-        if($currentid != $id)
-            {
-        $user = User::findOrFail($id);
+        $user=User::FindOrFail($id);
         $user->delete();
-        return redirect('/users')->with('succes', 'Pomyślnie usunięto użytkownika');
-            }
-        else
-        {return redirect('/users')->with('error', 'Nie możesz usunąć swojego konta!');}
+ 
+        return \Response::json(['success' => 'Usunięto użytkownika']);
     }
 
     public function createDetails(User $user,Contact $contact, Employee $employee){

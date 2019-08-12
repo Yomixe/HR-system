@@ -1,5 +1,6 @@
+
 @extends('layouts.app')
-@section('title', 'Firmark')
+@section('title', 'HR-system')
 @section('content')
 
 <div class="card uper">

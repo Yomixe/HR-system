@@ -21,11 +21,11 @@ class ScheduleController extends Controller
         $users=User::all();
         $current= \Auth::user();
         $schedules=Schedule::all();
+   
         $tempDates = Carbon::createFromDate($request->year, $request->month, 1);
         $daysInMonth=$tempDates->daysInMonth;
-       
-
-   //      for($day;$day<=$tempDates->daysInMonth;$day++) $days[$day]=$day;
+    
+ 
         return view('schedules.index',compact ('schedules','users','tempDates','current','daysInMonth'));
     }
 
@@ -34,14 +34,14 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $schedule=Schedule::findorFail($id);
+        $current=\Auth::user();
         $schedules=Schedule::all();
         $users=User::all();
  //year=new Carbon(Schedule::first()->start);
      
-  return view('schedules.create',compact ('schedules','users','schedule'));
+  return view('schedules.create',compact ('schedules','users','current'));
     }
 
     /**
@@ -50,26 +50,25 @@ class ScheduleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request, Schedule $schedule)
     {
        
-        $schedule= Schedule::findorFail($id);
-        
-        $data= $request->validate([
-            'date' => ['required', 'date'],
-            'start' => ['required' ],
-            'end' => ['required' ],
-            'type_of_day'=>['required'],
+    
+    $users=User::all();
+    $data= $request->validate([
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'start' => ['required','date_format:H:i'],
+            'end' => ['required','date_format:H:i', 'after:start' ],
             
-      ]); 
-    $schedule->create($data);
-  
-  
-       $schedule->users()->attach($request->user);
-      
-     
-          
-          return redirect(route('schedule.index'));
+            
+    ]); 
+    
+    $new=$schedule->create($data);
+     $new->users()->attach($request->user);  
+ 
+    
+          return redirect(route('schedule.index'))->with('success', 'Pomyślnie dodano plan');
       
     }
 
@@ -115,8 +114,10 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
-    }
+
+        $schedule->delete();  
+        return redirect(route('schedule.index'))->with('success', 'Pomyślnie usunięto plan');
+    }    
 
     
 

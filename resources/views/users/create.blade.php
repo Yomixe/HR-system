@@ -68,11 +68,16 @@
                     
                             <label >  
                                     <select name="working_hours" class="form-control{{ $errors->has('working_hours') ? ' is-invalid' : '' }}" name="working_hours" 
-                                    @if($user->employees and $user->contacts) value="{{$user->employees->working_hours}}"  @else value="{{ old('working_hours') }}"  @endif required />
+                                    @if($user->employees and $user->contacts)  value="{{$user->employees->working_hours}}" @else value="{{ old('working_hours') }}" @endif required >
+                                    
                                     @foreach((config('enum.working_hours')) as $et)
                                         <option value="{{$et}}"> {{$et}} </option>   
-                                    @endforeach 
+                                    @endforeach   
+                                    @if($user->employees and $user->contacts) 
+                                    <option selected value="{{$user->employees->working_hours}}">{{$user->employees->working_hours}}  </option>
+                                    @endif
                                     </select>
+                                  
                                     @if ($errors->has('working_hours'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('working_hours') }}</strong>
@@ -91,10 +96,13 @@
                     
                             <label >  
                                     <select name="tax_office" class="form-control{{ $errors->has('tax_office') ? ' is-invalid' : '' }}" name="tax_office"
-                                    @if($user->employees and $user->contacts) value="{{$user->employees->tax_office}}"  @else value="{{ old('tax_office') }}"  @endif required />
+                                    @if($user->employees and $user->contacts) value="{{$user->employees->tax_office}}" @else value="{{ old('tax_offfice') }}" @endif    required >
                                     @foreach((config('enum.tax_office')) as $office)
                                     <option value="{{$office}}"> {{$office}} </option>
                                     @endforeach 
+                                    @if($user->employees and $user->contacts) 
+                                    <option selected value="{{$user->employees->tax_office}}">{{$user->employees->tax_office}}  </option>
+                                    @endif
                                     </select>
                                    
                             </label> 
@@ -150,7 +158,20 @@
                                 @endif
                             </div>
                         </div>
-                        
+                        <div class="form-group row">
+                            <label for="bank_account" class="col-md-4 col-form-label text-md-right">{{ __('Konto bankowe') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="bank_account" type="text" class="form-control{{ $errors->has('bank_account') ? ' is-invalid' : '' }}" name="bank_account"
+                                @if($user->employees and $user->contacts) value="{{$user->employees->bank_account}}"  @else value="{{ old('bank_account') }}"  @endif required />
+
+                                @if ($errors->has('bank_account'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('bank_account') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
 
                         <div class="card-body">
                         <div class="form-group row">
@@ -160,11 +181,14 @@
                  
                             <label >  
                                     <select id="country" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country"
-                                    @if($user->employees and $user->contacts) value="{{$user->contacts->country}}"  @else value="{{ old('country') }}"  @endif required />
+                                    @if($user->employees and $user->contacts) value="{{$user->contacts->country}}"  @else value="{{ old('country') }}"  @endif  required />
                                   
                                     @foreach((config('enum.country')) as $coun)
                                         <option value="{{$coun}}"> {{$coun}} </option>   
                                     @endforeach 
+                                    @if($user->employees and $user->contacts) 
+                                    <option selected value="{{$user->contacts->country}}">{{$user->contacts->country}}  </option>
+                                    @endif
                                     </select>
                                     @if ($errors->has('country'))
                                     <span class="invalid-feedback" role="alert">
@@ -263,7 +287,20 @@
                                 @endif
                             </div>
                         </div> 
+                        <div class="form-group row">
+                            <label for="phone_number2" class="col-md-4 col-form-label text-md-right">{{ __('Numer telefonu 2') }}</label>
 
+                            <div class="col-md-6">
+                                <input id="phone_number2" type="text" class="form-control{{ $errors->has('phone_number2') ? ' is-invalid' : '' }}" name="phone_number" 
+                                @if($user->employees and $user->contacts) value="{{$user->contacts->phone_number2}}"  @else value="{{ old('phone_number2') }}"  @endif required />
+
+                                @if ($errors->has('phone_number2'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone_number2') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">

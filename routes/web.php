@@ -1,5 +1,5 @@
 <?php
-use App\LeaveType;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,34 +22,56 @@ Route::group([
 ], function(){
 Route::get('/', 'HomeController@authorization');   
 Route::get('/home','HomeController@authorization');
-Route::get('/changepassword','HomeController@formchangepassword');
-Route::post('/changepassword','HomeController@changepassword')->name('changepassword');
+Route::get('/zmienhaslo','HomeController@formchangepassword');
+Route::post('/zmienhaslo','HomeController@changepassword')->name('changepassword');
+Route::resource('/kalendarz','CalendarController');
+Route::get('wykresy/urlopy',"ChartController@leaves")->name('wykresy.urlopy');
+Route::resource('/mojedane','MyDataController');
+Route::resource('schedule', 'ScheduleController'); 
 });
 Route::group([
   'roles'=>['Admin',],
   'middleware'=>['roles','auth',]
 ], function(){
-Route::resource('/departments', 'DepartmentsController');   
-Route::resource('/users', 'UsersController') ;  
+Route::resource('departments', 'DepartmentsController');   
+Route::resource('users', 'UsersController') ;  
 
-Route::get('users/{user}/create', 'UsersController@createDetails')->name('users.createDetails');
-Route::patch('users/create/{user}', 'UsersController@storeDetails')->name('users.storeDetails');
-//Route::get('/schedule/{year?month?}', 'ScheduleController@calendar')->name('schedule.calendar'); 
-Route::get('/schedule', 'ScheduleController@calendar')->name('schedule.calendar'); 
+Route::get('users/{users}/create', 'UsersController@createDetails')->name('users.createDetails');
+Route::patch('users/create/{users}', 'UsersController@storeDetails')->name('users.storeDetails');
+Route::get('wykresy/nowiuzytkownicy',"ChartController@newusers");
+
 
 });
 Route::group([
   'roles'=>['Admin','Kierownik'],
   'middleware'=>['roles','auth',]
 ], function(){
-Route::resource('/employees', 'EmployeesController') ;  
-Route::resource('/schedule', 'ScheduleController'); 
-Route::get('schedule/create/{schedule}', 'ScheduleController@create')->name('schedule.create');
-Route::post('schedule/create/{schedule}', 'ScheduleController@store')->name('schedule.store');
-Route::resource('/leavetype','LeaveTypeController');
+
+Route::resource('/typurlopu','LeaveTypeController');
+Route::resource('/urlopy','LeaveController');
+Route::post('urlopy/{urlopy}/potwierdz','LeaveController@confirm');
+Route::get('wykresy/urlopypracownikow',"ChartController@leavesforManager")->name('wykresy.urlopypracownikow');
+
+});
+Route::group([
+  'roles'=>['Kierownik'],
+  'middleware'=>['roles','auth',]
+], function(){
+  Route::resource('/pracownicy', 'EmployeesController') ;  
+
+
+});
+Route::group([
+  'roles'=>['Pracownik'],
+  'middleware'=>['roles','auth',]
+], function(){
+
+Route::resource('/mojeurlopy','EmployeeLeaveController');
+
 
 });
 
 Auth::routes(['register' => true]);
+
 
 

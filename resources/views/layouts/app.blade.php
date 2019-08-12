@@ -7,12 +7,18 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    
+    @yield('styles')
     <!-- Scripts -->
     
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous" ></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
-
-
+  
  
   
  
@@ -23,10 +29,8 @@
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
-      <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    
 @yield('script')
 
 </head>
@@ -69,11 +73,46 @@
                     <a class="nav-link" href="{{action('UsersController@index')}}">{{ __('Użytkownicy') }}</a>
                     </li>
                     @endif
+                    @if( auth()->user()->hasAnyRole('Kierownik'))
                     <li class="nav-item">
                     <a class="nav-link" href="{{action('EmployeesController@index')}}">{{ __('Pracownicy') }}</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                     <a class="nav-link" href="{{action('ScheduleController@index')}}">{{ __('Plan pracy') }}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">{{ __('Urlopy') }}</a>
+                    </a>
+                    
+                    
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    @if(auth()->user()->hasAnyRole('Admin')) 
+                    <a class="dropdown-item" href="{{action('LeaveTypeController@index')}}" >
+                              
+                    {{ __('Rodzaje') }}
+                    </a>  
+                    @endif   
+                    @if(auth()->user()->hasAnyRole('Pracownik') ) 
+                   <a class="dropdown-item" href="{{action('EmployeeLeaveController@index')}}" >
+                    {{ __('Moje urlopy') }}
+                    </a>   
+                    
+                    @else 
+                     <a class="dropdown-item" href="{{action('LeaveController@index')}}" >
+                    {{ __('Urlopy użytkowników') }}
+                    </a> 
+                    <a class="dropdown-item" href="{{action('ChartController@leavesforManager')}}" >
+                                       
+                    {{ __('Statystyki urlopowe pracowników') }}
+                    </a>  
+                    @endif
+                   
+                    <a class="dropdown-item" href="{{action('ChartController@leaves')}}" >
+                                       
+                    {{ __('Moje statystyki urlopowe') }}
+                    </a>  
+                    </div>                  
                     </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -81,6 +120,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{action('MyDataController@index')}}" >
+                                       
+                                       {{ __('Wyświetl dane') }}
+                                   </a>
                                     <a class="dropdown-item" href="{{action('HomeController@formchangepassword')}}" >
                                        
                                         {{ __('Zmień hasło') }}

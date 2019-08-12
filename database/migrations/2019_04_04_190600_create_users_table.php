@@ -28,22 +28,22 @@ class CreateUsersTable extends Migration
             $table->string('comment')->nullable();
             $table->boolean('status')->nullable()->default(0);
             $table->rememberToken();
-            $table->softDeletes();
+           
            
             $table->timestamps();
 
             $table->foreign('department_id')
             ->references('id')
-            ->on('departments');
-            
+            ->on('departments')
+            ->onDelete('set null');
             $table->foreign('employee_id')
             ->references('id')
             ->on('employment_data')
-            ->onDelete('cascade');
+            ->onDelete('set null');
             $table->foreign('contact_id')
             ->references('id')
             ->on('contact_data')
-            ->onDelete('cascade');
+            ->onDelete('set null');
             
         });
     }

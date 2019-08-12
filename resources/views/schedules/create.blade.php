@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-@section('title', 'Firmark')
+@section('title', 'HR-system')
 @section('content')
 <div class="container">
 
@@ -10,43 +10,66 @@
                 <div class="card-header">{{ __('Dodaj ') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('schedule.store', $schedule->id) }}">
+                    <form method="POST" action="{{ route('schedule.store') }}">
                         @csrf
                         <div class="form-group row">
 
-                        <div class="form-group">
-                <label for="user" >{{_('Pracownik')}}</label>
-                <div class="row">
-                  @foreach ($users as $user)
-                      <div class="col-lg-3">
-                        <div class="checkbox">
-                           
-                          <label ><input type="checkbox" name="user[]" value="{{$user->id}}"
-                          @foreach ($user->schedules as $user_sch)
-                          
-                            @if ($user_sch->id == $user->id)
-                              checked
-                            @endif
-                          @endforeach> {{ $user->first_name }}</label>
-                        </div>  
-                      </div>
-                  @endforeach  
-                </div>
-            
-          </div>
                         
-                            <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Data') }}</label>
+     
+     <label for="user" class="col-md-4 col-form-label text-md-right">{{ __('Pracownik') }}</label>
+     <div class="col-md-6">
+     <select id="user"   class=" form-control{{ $errors->has('user') ? ' is-invalid' : '' }}" name="user" value="{{ old('user') }}" required>
+     <option value="" selected="selected" disabled="disabled">{{ __('Wybierz...') }}</option>     
+
+     @foreach($users as $user)
+     
+     @foreach($current->roles as $role) 
+     @if($role->name!="Admin")
+     @if($user->departments)
+     @if($current->departments)
+     @if ( $current->departments->id==$user->departments->id )
+     <option value="{{$user->id}}"> {{$user->first_name}} {{$user->last_name}} </option>  
+     @endif
+     @endif     
+     @endif          
+     
+     @else
+     <option value="{{$user->id}}"> {{$user->first_name}} {{$user->last_name}} </option>  
+     @endif 
+     @endforeach 
+     @endforeach
+     
+     </select>       
+ 
+ </div>
+</div> 
+                            <div class="form-group row">
+                            <label for="start_date" class="col-md-4 col-form-label text-md-right">{{ __('Data początkowa') }}</label>
 
                             <div class="col-md-6">
-                            <input id="date" type="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required>
+                            <input id="start_date" type="date" class="form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date" value="{{ old('start_date') }}" required>
 
-                                @if ($errors->has('date'))
+                                @if ($errors->has('start_date'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('date') }}</strong>
+                                        <strong>{{ $errors->first('start_date') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                         <label for="end_date" class="col-md-4 col-form-label text-md-right">{{ __('Data końcowa') }}</label>
+
+                            <div class="col-md-6">
+                            <input id="end_date" type="date" class="form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" value="{{ old('end_date') }}" required>
+
+                                @if ($errors->has('end_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
                         <div class="form-group row">
 
                         
@@ -77,19 +100,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="type_of_day" class="col-md-4 col-form-label text-md-right">{{ __('Typ dnia') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="type_of_day" type="text" class="form-control{{ $errors->has('type_of_day') ? ' is-invalid' : '' }}" name="type_of_day" value="{{ old('type_of_day') }}" required>
-
-                                @if ($errors->has('type_of_day'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('type_of_day') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                       
             
                
  

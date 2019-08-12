@@ -73,10 +73,13 @@ class LoginController extends Controller
         $user = User::where($this->username(), $email)->first();
        
         $this->incrementLoginAttempts($request);
-    
-        if ($user->status === 0) {
+    if($user){
+        if ($user->status == 0) {
             return $this->sendFailedLoginResponse($request, 'auth.failed_status');
-        }
+        }}
+    else
+    {return $this->sendFailedLoginResponse($request, 'auth.user_doent_exist');
+    }
         return $this->sendFailedLoginResponse($request);
     }
     /**
@@ -85,6 +88,7 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
     protected function credentials(Request $request)
     {
         $credentials = $request->only($this->username(), 'password');

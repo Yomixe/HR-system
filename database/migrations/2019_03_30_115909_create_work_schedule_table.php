@@ -15,13 +15,13 @@ class CreateWorkScheduleTable extends Migration
     {
         Schema::create('work_schedule', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date');
-            $table->enum('type_of_day',config('enum.type_of_day'));
+            $table->date('start_date');
+            $table->date('end_date');
             $table->time('start');
             $table->time('end');
             
             $table->timestamps();
-            $table->softDeletes();
+         
         });
     }
 

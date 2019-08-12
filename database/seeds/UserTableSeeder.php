@@ -23,9 +23,9 @@ class UserTableSeeder extends Seeder
         'email'=>'jan@example.com',
         'username'=>'janek123',
         'password'=>hash::make('!QAZ2wsx'),
-        'department_id'=>1,
-        'date_of_birth'=>'1998-10-18',
         
+        'date_of_birth'=>'1998-10-18',
+      
         'status'=>1,
     ]);
    $admin ->roles() ->attach(Roles::where('name','Admin')->first());
@@ -34,10 +34,10 @@ class UserTableSeeder extends Seeder
     $manager=User::create([
         'first_name'=>'Janusz',
         'last_name'=>'Milik',
-        'email'=>'janussz@example.com',
+        'email'=>'janusz@example.com',
         'username'=>'janusz123',
         'password'=>hash::make('!QAZ2wsx'),
-        'department_id'=>1,
+        'department_id'=>2,
         'date_of_birth'=>'1998-10-18',
        
     ]); 
@@ -49,7 +49,7 @@ class UserTableSeeder extends Seeder
         'email'=>'janina@example.com',
         'username'=>'janina',
         'password'=>Hash::make('!QAZ2wsx'),
-        'department_id'=>1,
+        'department_id'=>2,
         'date_of_birth'=>'1998-10-18',
        
     ]);

@@ -13,4 +13,5 @@ return [
     'failed'   => 'Błędny login lub hasło.',
     'throttle' => 'Za dużo nieudanych prób logowania. Proszę spróbować za :seconds sekund.',
     'failed_status' => 'Twoje konto aktualnie czeka na akceptacje. Spróbuj ponownie później lub skontaktuj się z administratorem.',
+    'user_doent_exist'=>'Użytkownik o takim e-mailu/loginie nie istnieje',
 ];

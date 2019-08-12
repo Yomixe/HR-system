@@ -6,9 +6,20 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap.scss';
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+
+
+.icon {
+fill: currentColor;
+display: inline-block;
+font-size: inherit;
+height: 1em;
+overflow: visible;
+vertical-align: -.125em;
 }
